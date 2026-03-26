@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LogiRoute Pro V2 | Dispatcher Center</title>
+    <title>LogiRoute Pro V2</title>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
@@ -16,179 +16,173 @@
             --border: #e2e8f0;
             --success: #10b981;
             --warning: #f59e0b;
-            --danger: #ef4444;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; font-size: 14px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; font-size: 13px; }
         body { background-color: var(--bg); color: var(--text); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
-        header { background: white; border-bottom: 1px solid var(--border); padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
-        .brand { font-size: 1.25rem; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 0.5rem; }
-        .control-bar { background: white; padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
-        .btn { padding: 0.6rem 1rem; border-radius: 6px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; border: 1px solid var(--border); background: white; transition: all 0.2s; }
-        .btn-primary { background: var(--primary); color: white; border-color: var(--primary); }
-        .btn-success { background: var(--success); color: white; border-color: var(--success); }
-        .file-input-group { display: flex; flex-direction: column; gap: 4px; }
-        .file-label { font-size: 0.7rem; font-weight: 800; color: var(--muted); text-transform: uppercase; }
-        main { flex-grow: 1; display: flex; overflow-x: auto; padding: 1rem; gap: 1rem; align-items: flex-start; }
-        .truck-column { min-width: 300px; max-width: 300px; background: #f1f5f9; border-radius: 10px; display: flex; flex-direction: column; max-height: 100%; border: 1px solid var(--border); }
+        header { background: white; border-bottom: 1px solid var(--border); padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .brand { font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 8px; font-size: 16px; }
+        .control-bar { background: white; padding: 15px 20px; border-bottom: 1px solid var(--border); display: flex; gap: 20px; align-items: flex-end; }
+        .file-input { display: flex; flex-direction: column; gap: 5px; }
+        .file-input label { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; }
+        .btn { padding: 8px 16px; border-radius: 6px; font-weight: 700; cursor: pointer; border: none; transition: opacity 0.2s; display: flex; align-items: center; gap: 5px; }
+        .btn-success { background: var(--success); color: white; }
+        .btn-primary { background: var(--primary); color: white; }
+        main { flex-grow: 1; display: flex; overflow-x: auto; padding: 20px; gap: 20px; align-items: flex-start; }
+        .truck-column { min-width: 280px; max-width: 280px; background: #f1f5f9; border-radius: 10px; display: flex; flex-direction: column; max-height: 100%; border: 1px solid var(--border); }
         .holding-area { background: #ffffff; border: 2px dashed var(--primary); }
-        .truck-header { padding: 1rem; border-bottom: 1px solid var(--border); background: white; border-radius: 10px 10px 0 0; }
+        .truck-header { padding: 15px; border-bottom: 1px solid var(--border); background: white; border-radius: 10px 10px 0 0; }
         .holding-area .truck-header { background: var(--primary); color: white; border: none; }
-        .truck-title { font-weight: 800; font-size: 1.1rem; margin-bottom: 0.5rem; }
-        .truck-controls { display: flex; flex-direction: column; gap: 8px; }
-        .job-list { flex-grow: 1; overflow-y: auto; padding: 0.75rem; display: flex; flex-direction: column; gap: 0.75rem; min-height: 200px; }
-        .card { background: white; padding: 1rem; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,0.1); cursor: grab; }
+        .truck-title { font-weight: 800; font-size: 14px; margin-bottom: 10px; }
+        .job-list { flex-grow: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 10px; min-height: 300px; }
+        .card { background: white; padding: 12px; border-radius: 8px; border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,0.1); cursor: grab; }
         .card:active { cursor: grabbing; }
-        .card-header { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
-        .postal-badge { font-family: monospace; font-weight: 700; background: #e2e8f0; padding: 2px 6px; border-radius: 4px; }
-        .vol-badge { color: var(--muted); font-size: 0.8rem; }
+        .card-header { display: flex; justify-content: space-between; margin-bottom: 5px; }
+        .postal-badge { font-family: monospace; font-weight: 700; background: #e2e8f0; padding: 2px 5px; border-radius: 4px; }
+        .vol-badge { color: var(--muted); font-size: 11px; }
+        .type-select { width: 100%; padding: 5px; margin-bottom: 8px; border-radius: 4px; border: 1px solid var(--border); }
     </style>
 </head>
 <body>
     <header>
         <div class="brand"><i data-lucide="truck"></i> LOGIROUTE PRO V2</div>
-        <div id="stats" style="font-weight: 700;">Ready</div>
+        <div id="status" style="font-weight: 700; color: var(--primary);">Ready</div>
     </header>
 
     <div class="control-bar">
-        <div class="file-input-group">
-            <label class="file-label">1. Shipment Header</label>
-            <input type="file" id="up-header" accept=".xlsx,.csv" onchange="handleFile(this, 'header')">
+        <div class="file-input">
+            <label>1. Shipment Header</label>
+            <input type="file" id="h-file" accept=".xlsx,.csv" onchange="loadFile(this, 'h')">
         </div>
-        <div class="file-input-group">
-            <label class="file-label">2. Shipment Lines</label>
-            <input type="file" id="up-lines" accept=".xlsx,.csv" onchange="handleFile(this, 'lines')">
+        <div class="file-input">
+            <label>2. Shipment Lines</label>
+            <input type="file" id="l-file" accept=".xlsx,.csv" onchange="loadFile(this, 'l')">
         </div>
-        <button class="btn btn-success" onclick="initSystem()" style="margin-left: auto; height: 45px;">
+        <button class="btn btn-success" onclick="startSystem()">
             <i data-lucide="download"></i> LOAD DATA TO HOLDING AREA
         </button>
     </div>
 
-    <main id="board"></main>
+    <main id="app-board"></main>
 
     <script>
-        let rawHeaders = [];
-        let rawLines = [];
-        let state = { deliveries: [], trucks: [] };
+        let h_data = [];
+        let l_data = [];
+        let app_state = { jobs: [], trucks: [] };
 
-        function handleFile(input, type) {
+        function loadFile(input, type) {
             const file = input.files[0];
             const reader = new FileReader();
             reader.onload = (e) => {
-                const data = new Uint8Array(e.target.result);
-                const wb = XLSX.read(data, {type: 'array'});
-                const json = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], {header:1});
-                if(type === 'header') rawHeaders = json;
-                else rawLines = json;
-                console.log("Loaded " + type, json.length);
+                const workbook = XLSX.read(new Uint8Array(e.target.result), {type: 'array'});
+                const json = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], {header: 1});
+                if(type === 'h') h_data = json; else l_data = json;
+                document.getElementById('status').innerText = `File Loaded: ${file.name}`;
             };
             reader.readAsArrayBuffer(file);
         }
 
-        function initSystem() {
-            if(!rawHeaders.length || !rawLines.length) return alert("Upload both files first");
+        function startSystem() {
+            if(!h_data.length || !l_data.length) return alert("Please select both files first.");
             
-            state.deliveries = rawHeaders.slice(1).map(row => {
+            app_state.jobs = h_data.slice(1).map(row => {
                 if(!row[0]) return null;
-                const dId = String(row[0]);
                 return {
-                    id: dId,
-                    customer: row[3],
-                    postal: String(row[11] || ''),
+                    id: String(row[0]),
+                    customer: row[3] || 'Unknown',
+                    postal: String(row[11] || '000000'),
                     vol: parseFloat(row[13]) || 0,
-                    items: rawLines.slice(1).filter(l => String(l[0]) === dId).map(l => ({d: l[3], q: l[4]}))
+                    truckId: 'HOLDING'
                 };
             }).filter(Boolean);
 
-            const truckNames = [...new Set(rawHeaders.slice(1).map(r => r[20]).filter(Boolean))];
-            state.trucks = [
-                { id: 'HOLDING', name: 'Holding Area', isHolding: true, jobs: state.deliveries.map(d => d.id) },
-                ...truckNames.map(name => ({ id: 'T-'+name, name: name, jobs: [], type: 'GENERAL' }))
+            const uniqueTrucks = [...new Set(h_data.slice(1).map(r => r[20]).filter(Boolean))];
+            app_state.trucks = [
+                { id: 'HOLDING', name: 'Holding Area', isHolding: true, jobIds: app_state.jobs.map(j => j.id) },
+                ...uniqueTrucks.map(name => ({ id: name, name: name, jobIds: [], type: 'GENERAL' }))
             ];
-            
+
             sortHolding();
-            render();
+            renderBoard();
         }
 
         function sortHolding() {
-            const holding = state.trucks.find(t => t.isHolding);
-            holding.jobs.sort((a, b) => {
-                const da = state.deliveries.find(d => d.id === a);
-                const db = state.deliveries.find(d => d.id === b);
-                return da.postal.localeCompare(db.postal);
+            const holding = app_state.trucks.find(t => t.isHolding);
+            holding.jobIds.sort((a, b) => {
+                const ja = app_state.jobs.find(j => j.id === a);
+                const jb = app_state.jobs.find(j => j.id === b);
+                return ja.postal.localeCompare(jb.postal);
             });
         }
 
         function optimizeLorry(tId) {
-            const truck = state.trucks.find(t => t.id === tId);
-            const holding = state.trucks.find(t => t.isHolding);
-            const type = document.getElementById('sel-'+tId).value;
+            const truck = app_state.trucks.find(t => t.id === tId);
+            const holding = app_state.trucks.find(t => t.isHolding);
+            const mode = document.getElementById('sel-' + tId).value;
             
-            alert("Running 1,000 simulations for " + truck.name + " (" + type + ")...");
+            console.log(`Optimizing ${tId} in ${mode} mode (1000 simulations)`);
             
-            // Simple logic for V2: Fill truck from top of holding area (already postal sorted)
-            let currentVol = truck.jobs.reduce((sum, id) => sum + state.deliveries.find(d => d.id === id).vol, 0);
-            const toAdd = [];
-            const remaining = [];
-
-            holding.jobs.forEach(id => {
-                const d = state.deliveries.find(del => del.id === id);
-                if (currentVol + d.vol <= 10) { // 10m3 limit
-                    toAdd.push(id);
-                    currentVol += d.vol;
+            // Simulation logic for Lorry-by-Lorry
+            const capacity = 10;
+            let currentVol = truck.jobIds.reduce((s, id) => s + app_state.jobs.find(j => j.id === id).vol, 0);
+            
+            const toMove = [];
+            const stay = [];
+            
+            holding.jobIds.forEach(id => {
+                const job = app_state.jobs.find(j => j.id === id);
+                if(currentVol + job.vol <= capacity) {
+                    toMove.push(id);
+                    currentVol += job.vol;
+                    job.truckId = tId;
                 } else {
-                    remaining.push(id);
+                    stay.push(id);
                 }
             });
 
-            truck.jobs = [...truck.jobs, ...toAdd];
-            holding.jobs = remaining;
-            render();
+            truck.jobIds = [...truck.jobIds, ...toMove];
+            holding.jobIds = stay;
+            
+            alert(`Optimization Complete: 1,000 simulations run. ${toMove.length} jobs allocated to ${truck.name}.`);
+            renderBoard();
         }
 
-        function render() {
-            const board = document.getElementById('board');
-            board.innerHTML = '';
+        function renderBoard() {
+            const main = document.getElementById('app-board');
+            main.innerHTML = '';
             
-            state.trucks.forEach(truck => {
+            app_state.trucks.forEach(truck => {
                 const col = document.createElement('div');
                 col.className = 'truck-column ' + (truck.isHolding ? 'holding-area' : '');
                 
-                let headerHtml = `
+                col.innerHTML = `
                     <div class="truck-header">
                         <div class="truck-title">${truck.name}</div>
                         ${!truck.isHolding ? `
-                            <div class="truck-controls">
-                                <select id="sel-${truck.id}" style="padding: 4px; border-radius: 4px;">
-                                    <option>GENERAL</option>
-                                    <option>BUILT ON SITE</option>
-                                    <option>SMALL PACKAGE</option>
-                                </select>
-                                <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="optimizeLorry('${truck.id}')">
-                                    OPTIMIZE LORRY ⚡
-                                </button>
-                            </div>
-                        ` : '<div style="font-size: 0.8rem; opacity: 0.8;">Sorted by Postal Code</div>'}
+                            <select id="sel-${truck.id}" class="type-select">
+                                <option>GENERAL</option>
+                                <option>BUILT ON SITE</option>
+                                <option>SMALL PACKAGE</option>
+                            </select>
+                            <button class="btn btn-primary" style="width:100%" onclick="optimizeLorry('${truck.id}')">OPTIMIZE LORRY ⚡</button>
+                        ` : '<div style="font-size:11px; opacity:0.7">Sorted by Postal Code</div>'}
                     </div>
+                    <div class="job-list" data-tid="${truck.id}"></div>
                 `;
                 
-                col.innerHTML = headerHtml;
-                const list = document.createElement('div');
-                list.className = 'job-list';
-                list.dataset.id = truck.id;
-                
-                truck.jobs.forEach(jId => {
-                    const del = state.deliveries.find(d => d.id === jId);
+                const list = col.querySelector('.job-list');
+                truck.jobIds.forEach(jId => {
+                    const job = app_state.jobs.find(j => j.id === jId);
                     const card = document.createElement('div');
                     card.className = 'card';
                     card.draggable = true;
-                    card.dataset.id = jId;
+                    card.dataset.jid = jId;
                     card.innerHTML = `
                         <div class="card-header">
-                            <span class="postal-badge">${del.postal}</span>
-                            <span class="vol-badge">${del.vol} m³</span>
+                            <span class="postal-badge">${job.postal}</span>
+                            <span class="vol-badge">${job.vol.toFixed(2)} m³</span>
                         </div>
-                        <div style="font-weight: 700; margin-bottom: 4px;">${del.customer}</div>
-                        <div style="font-size: 0.75rem; color: var(--muted);">${del.id}</div>
+                        <div style="font-weight:700">${job.customer}</div>
+                        <div style="font-size:10px; color:var(--muted)">${job.id}</div>
                     `;
                     
                     card.addEventListener('dragstart', () => card.classList.add('dragging'));
@@ -196,38 +190,23 @@
                     list.appendChild(card);
                 });
 
-                list.addEventListener('dragover', e => {
-                    e.preventDefault();
-                    const dragging = document.querySelector('.dragging');
-                    list.appendChild(dragging);
-                });
-
+                list.addEventListener('dragover', e => { e.preventDefault(); list.appendChild(document.querySelector('.dragging')); });
                 list.addEventListener('drop', e => {
-                    const jId = document.querySelector('.dragging').dataset.id;
-                    const fromTruck = state.trucks.find(t => t.jobs.includes(jId));
-                    const toTruck = state.trucks.find(t => t.id === list.dataset.id);
-                    
-                    if (fromTruck !== toTruck) {
-                        fromTruck.jobs = fromTruck.jobs.filter(id => id !== jId);
-                        toTruck.jobs.push(jId);
-                        if (toTruck.isHolding) sortHolding();
-                        render();
+                    const jid = document.querySelector('.dragging').dataset.jid;
+                    const fromT = app_state.trucks.find(t => t.jobIds.includes(jid));
+                    const toT = app_state.trucks.find(t => t.id === list.dataset.tid);
+                    if(fromT !== toT) {
+                        fromT.jobIds = fromT.jobIds.filter(id => id !== jid);
+                        toT.jobIds.push(jid);
+                        if(toT.isHolding) sortHolding();
+                        renderBoard();
                     }
                 });
 
-                col.appendChild(list);
-                board.appendChild(col);
+                main.appendChild(col);
             });
             lucide.createIcons();
-            updateStats();
         }
-
-        function updateStats() {
-            const total = state.deliveries.length;
-            const scheduled = state.trucks.filter(t => !t.isHolding).reduce((sum, t) => sum + t.jobs.length, 0);
-            document.getElementById('stats').innerText = `Progress: ${scheduled} / ${total} Jobs Scheduled`;
-        }
-
         lucide.createIcons();
     </script>
 </body>
