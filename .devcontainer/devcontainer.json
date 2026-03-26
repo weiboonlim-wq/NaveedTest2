@@ -1,13 +1,11 @@
 {
-    "name": "Lorry Scheduler V2",
+    "name": "Lorry Scheduler V2 (Streamlit)",
     "image": "mcr.microsoft.com/devcontainers/python:3.12",
-    "features": {
-        "ghcr.io/devcontainers/features/node:1": {}
-    },
     "postCreateCommand": "pip install -r requirements.txt",
     "customizations": {
         "codespaces": {
             "openFiles": ["app.py", "static/index.html"]
         }
-    }
+    },
+    "forwardPorts": [8501]
 }

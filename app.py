@@ -1,12 +1,19 @@
-from flask import Flask, send_from_directory
+import streamlit as st
+import streamlit.components.v1 as components
 import os
 
-app = Flask(__name__, static_folder='static')
+st.set_page_config(layout="wide", page_title="LogiRoute Pro V2")
 
-@app.route('/')
-def index():
-    return send_from_directory('static', 'index.html')
+# Read the HTML file from static/index.html
+html_path = os.path.join(os.getcwd(), 'static', 'index.html')
 
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+if os.path.exists(html_path):
+    with open(html_path, 'r', encoding='utf-8') as f:
+        html_content = f.read()
+    
+    # Use components.html to render the entire V2 logic
+    # Set height large enough to avoid double scrollbars if possible, or use 100vh
+    components.html(html_content, height=1000, scrolling=True)
+else:
+    st.error("Error: static/index.html not found!")
+
